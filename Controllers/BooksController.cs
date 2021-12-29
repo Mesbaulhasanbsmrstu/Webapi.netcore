@@ -29,6 +29,18 @@ namespace Webapi.netcore.Controllers
         {
             return Ok("mesbaul");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> AddBook([FromBody]Books book)
+        {
+            if (ModelState.IsValid)
+            {
+               var message= await _bookRepository.AddBook(book);
+                return Ok(message);
+
+            }
+                return Ok("fail");
+        }
     }
 }
 

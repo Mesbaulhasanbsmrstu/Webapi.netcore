@@ -26,6 +26,15 @@ namespace Webapi.netcore.Repository
             }).ToListAsync();
             return  records;
         }
+
+        public async Task<string> AddBook(Books book)
+        {
+
+             _context.books.Add(book);
+            await _context.SaveChangesAsync();
+            return "success";
+           
+        }
     }
   
 }
