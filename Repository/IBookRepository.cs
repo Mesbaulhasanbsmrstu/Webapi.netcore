@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Webapi.netcore.Model;
 
 namespace Webapi.netcore.Repository
 {
-  public interface IBookRepository
+    public interface IBookRepository
     {
+        Task<List<Books>> GetAllBooks();
     }
 }

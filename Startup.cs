@@ -31,9 +31,10 @@ namespace Webapi.netcore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-  
             services.AddControllers();
-            services.AddSingleton<IBookRepository, BookRepository>();
+            services.AddTransient<IBookRepository, BookRepository>();
+
+            //services.AddSingleton<IBookRepository, BookRepository>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Webapi.netcore", Version = "v1" });
