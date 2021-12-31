@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace Webapi.netcore.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class BooksController : ControllerBase
     {
         public readonly IBookRepository _bookRepository;
@@ -30,6 +32,21 @@ namespace Webapi.netcore.Controllers
             return Ok("mesbaul");
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> getSingleBook([FromRoute]int id)
+        {
+            if(id==0)
+            {
+                return NotFound();
+            }
+            var book = await _bookRepository.GetSingleBook(id);
+            if(book==null)
+            {
+                return NotFound();
+            }
+            return Ok(book);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddBook([FromBody]Books book)
         {
@@ -40,6 +57,28 @@ namespace Webapi.netcore.Controllers
 
             }
                 return Ok("fail");
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> updateBook([FromRoute] int id,[FromBody] Books book)
+        {
+            if(id==0)
+            {
+                return NotFound();
+            }
+            await _bookRepository.UpdateBook(id, book);
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> deleteBook([FromRoute] int id)
+        {
+            if(id==0)
+            {
+                NotFound();
+            }
+            await _bookRepository.DeleteBook(id);
+            return Ok();
         }
     }
 }

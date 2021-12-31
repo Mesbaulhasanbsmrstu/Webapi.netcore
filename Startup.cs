@@ -31,9 +31,10 @@ namespace Webapi.netcore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
+          
             services.AddTransient<IBookRepository, BookRepository>();
-
+            services.AddAutoMapper(typeof(Startup));
             //services.AddSingleton<IBookRepository, BookRepository>();
             services.AddSwaggerGen(c =>
             {
