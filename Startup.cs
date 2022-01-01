@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Webapi.netcore.DataFolder;
+using Webapi.netcore.Model;
 using Webapi.netcore.Repository;
 
 namespace Webapi.netcore
@@ -34,7 +36,9 @@ namespace Webapi.netcore
             services.AddControllers().AddNewtonsoftJson();
           
             services.AddTransient<IBookRepository, BookRepository>();
+            services.AddTransient<IAccountRepository,AccountRepository>();
             services.AddAutoMapper(typeof(Startup));
+            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
             //services.AddSingleton<IBookRepository, BookRepository>();
             services.AddSwaggerGen(c =>
             {

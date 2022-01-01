@@ -12,7 +12,7 @@ namespace Webapi.netcore.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize]
+   
     public class BooksController : ControllerBase
     {
         public readonly IBookRepository _bookRepository;
